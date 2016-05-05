@@ -1,0 +1,132 @@
+\documentclass[a4paper,10pt,twoside,openany]{report}
+\usepackage{graphicx}
+%\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{ifpdf}
+\usepackage{ifthen}
+\usepackage[round]{natbib}
+\usepackage{amsmath}
+\usepackage{units}
+\usepackage[switch]{lineno}
+\usepackage{xspace}
+
+
+
+
+
+
+%%set font
+\usepackage[T1]{fontenc}
+%and allow UTF8 input ( e.g. umlauts and friends)
+\usepackage[utf8]{inputenc}
+\usepackage{palatino}
+\usepackage{mathpazo}
+%\usepackage{utopia}
+%\usepackage{euler}
+
+
+%define some colors
+\definecolor{gfzblue}{rgb}{0., 0.4, 0.65}
+\definecolor{iggblue}{rgb}{0,0.258824,0.568627}
+%or gray
+\definecolor{graycust}{rgb}{0.45,0.45,0.45}
+
+\definecolor{backgrnd}{rgb}{0.8, 0.8, 0.8}
+\definecolor{sunsetorange}{rgb}{1, .3, .11}
+\definecolor{mossgreen}{rgb}{0.14,0.5,0.06}
+
+%% Search path for figures
+\graphicspath{{figures/}} %% full color figures
+%%\graphicspath{{figures_gray/}} %% for grayscale figures
+
+%%
+
+
+%new commands to insert the title subtitle and author where necessary
+\newcommand{\ititle}{Surface Loading effects on the LHC tunnel}
+\title{\ititle}
+\newcommand{\iauthor}{Roelof Rietbroek}
+\author{\iauthor}
+
+%add command to quickly insert colored remarks in the margin
+\newcommand{\todo}[1]{\marginline{\color{red} TODO:\\#1}}
+
+%pdf vs non-pdf options
+\ifpdf
+   \usepackage[pdftex,pdfpagelabels]{hyperref}
+   \pdfcompresslevel=9
+   \hypersetup{
+     pdftitle={\ititle},
+     pdfauthor={\iauthor},
+     pdfsubject={LHC tunnel deformtions},
+     pdfkeywords={Geodesy},
+     colorlinks=true,
+     urlcolor=iggblue,
+     linkcolor=iggblue,
+     citecolor=iggblue,
+     breaklinks=true,
+     plainpages=false
+   }
+
+\else
+  \usepackage{hyperref} %basic dvi output with fugly  but obvious hyperlinks
+     \hypersetup{
+     colorlinks=true,
+     urlcolor=iggblue,
+     linkcolor=iggblue,
+     citecolor=iggblue,
+     breaklinks=true,
+     plainpages=false
+     }                           
+  
+\fi
+
+
+%includeonly
+%\includeonly{preface}
+% begin main document
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Some thoughts and a theoretical framework are gathered here to
+quantify the circumference changes due to surface loading induced
+deformations of the bedrock.
+
+\section{Horizontal deformations due to surface loading}
+\section{LHC circumference changes due to horizontal surface
+  deformations}
+Assumptions:
+\begin{itemize}
+\item ring is positioned horizontally (it is not but to first order it
+  is)
+  \item Horizontal deformations in and around the ring can be
+    linearized wrt to the center point.
+\end{itemize}
+Circumference changes of the(a) LHC ring,  $\Delta L$, may be computed by a path
+integral of the horizontal deformations, $\vec{h}$ along a circular path: 
+\begin{equation}
+  \Delta L =\oint_{ring} \vec{h} \cdot \frac{d\vec{s}}{|d\vec{s}|}
+\end{equation}
+For a circular ring we may parameterize the ring in terms of a fixed
+radius, $r_{lhc}$ and an azimuth angle $\alpha$:
+\begin{equation}
+  \Delta L =\int_{0}^{2\pi}
+  \left[\begin{array}{c}h_{north}(\alpha,r_{LHC})\\h_{east}(\alpha,r_{LHC})\end{array}\right]
+  \cdot \left[\begin{array}{c}-\sin \alpha\\\cos \alpha\end{array}\right]d\alpha
+\end{equation}
+
+
+When the  ring is relatively small we may linearize the deformation
+\subsection{Hydrology and atmospheric induced LHC circumference changes from GRACE data}
+\subsection{LHC circumference changes due to water level changes}
+
+
+
+% make Bibliography
+%% \bibliography{roelofsrefsauto}
+%% \bibliographystyle{abbrvnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{authordate1}
+\end{document}
+
