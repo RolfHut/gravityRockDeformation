@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt,twoside,openany]{report}
+\documentclass[a4paper,10pt,twoside,openany]{article}
 \usepackage{graphicx}
 %\usepackage{fancyhdr}
 \usepackage{xcolor}
@@ -6,9 +6,7 @@
 \usepackage{ifthen}
 \usepackage[round]{natbib}
 \usepackage{amsmath}
-\usepackage{units}
-\usepackage[switch]{lineno}
-\usepackage{xspace}
+
 
 
 
@@ -36,7 +34,7 @@
 \definecolor{mossgreen}{rgb}{0.14,0.5,0.06}
 
 %% Search path for figures
-\graphicspath{{figures/}} %% full color figures
+\graphicspath{{figs/}} %% full color figures
 %%\graphicspath{{figures_gray/}} %% for grayscale figures
 
 %%
@@ -98,26 +96,72 @@ deformations of the bedrock.
   deformations}
 Assumptions:
 \begin{itemize}
-\item ring is positioned horizontally (it is not but to first order it
+\item ring is positioned horizontally (it is only approximately horizontal)
   is)
   \item Horizontal deformations in and around the ring can be
     linearized wrt to the center point.
 \end{itemize}
-Circumference changes of the(a) LHC ring,  $\Delta L$, may be computed by a path
-integral of the horizontal deformations, $\vec{h}$ along a circular path: 
+\begin{figure}
+\includegraphics[width=\textwidth]{Ringschematically}
+\end{figure}
+The circumference of the LHC ring,  $\Delta L$, may be computed by a path
+integral over the ring which is deformed from a perfect circle by $\vec{h}(x,y)$:
 \begin{equation}
-  \Delta L =\oint_{ring} \vec{h} \cdot \frac{d\vec{s}}{|d\vec{s}|}
+  L =\oint_{deformed ring} ds(x,y) 
 \end{equation}
-For a circular ring we may parameterize the ring in terms of a fixed
-radius, $r_{lhc}$ and an azimuth angle $\alpha$:
+We parameterize the path of deformed ring in terms of angle
+$\alpha$. The infinitesimal path length $ds(x,y)$ , can then be
+linked to $d\alpha$ by:
 \begin{equation}
-  \Delta L =\int_{0}^{2\pi}
-  \left[\begin{array}{c}h_{north}(\alpha,r_{LHC})\\h_{east}(\alpha,r_{LHC})\end{array}\right]
-  \cdot \left[\begin{array}{c}-\sin \alpha\\\cos \alpha\end{array}\right]d\alpha
+r\alpha=\vec{e}_{\alpha}\cdot (\vec{e}_{s} ds)
+\end{equation}
+Where $\vec{e}_{s}$ is the tangential (unit) vector to the deformed ring and
+$\vec{e}_{\alpha}$ is a unit vector in the direction of alpha:
+\begin{equation}
+\vec{e}_{\alpha}=\left[\begin{array}{c}\cos \alpha\\-\sin \alpha\end{array}\right]
+\end{equation}
+
+The integral above may thus be rewritten in terms of $\alpha$.
+\begin{equation}
+  L =\int_{0}^{2\pi} \frac{r}{\vec{e}_{\alpha}\cdot \vec{e}_{s}}d\alpha 
 \end{equation}
 
 
-When the  ring is relatively small we may linearize the deformation
+There are several approximations which we can now apply:
+\begin{itemize}
+  \item linearize the horizontal deformation field around the center
+    of the ring. (Probably OK, since the deformations are expected to
+    be of large scale (10s of kms').
+    \item evaluate  the horizontal deformations at the original ring
+      and not on the deformed ring. This may help in solving the
+      integral  in an analytical way.
+  \end{itemize}
+
+%%For a circular  ring we may parameterize the ring in terms of a fixed
+%% radius, $r_{lhc}$ and an azimuth angle $\alpha$:
+%% \begin{equation}
+%%   \Delta L =\int_{0}^{2\pi}
+%%   \left[\begin{array}{c}h_{x}(x,y)\\h_{y}(x,y)\end{array}\right]
+%%   \cdot \left[\begin{array}{c}\cos \alpha\\-\sin \alpha\end{array}\right]d\alpha
+%% \label{eq:2}\end{equation}
+
+
+%% When the  ring is relatively small we may linearize the deformation
+%% around the ring's center $(\lambda_{c},\theta_{c})$:
+%% \begin{equation}
+%% \vec{h}(x,y)=\vec{h}(x_{c},y_{c})+\frac{\partial \vec{h}}{\partial
+%%   x}\vert_{c}(x-x_{c})+ \frac{\partial \vec{h}}{\partial y}\vert_{c}(y-y_{c})+ \mathcal{O}(2) 
+%% \end{equation}
+
+%% noting that:
+%% \[
+%% \left[\begin{array}{c}x-x_{c}\\y-y_{c}\end{array}\right]=r_{LHC}\left[\begin{array}{c}\sin \alpha\\\cos \alpha\end{array}\right]
+%% \]
+%% We can solve the integral \ref{eq:2} in terms of the gradients of the
+%% horizontal deformation field:
+%% \begin{equation}
+%% \Delta L=
+%% \end{equation}
 \subsection{Hydrology and atmospheric induced LHC circumference changes from GRACE data}
 \subsection{LHC circumference changes due to water level changes}
 
