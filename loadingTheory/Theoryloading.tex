@@ -57,7 +57,7 @@
      pdftitle={\ititle},
      pdfauthor={\iauthor},
      pdfsubject={LHC tunnel deformtions},
-     pdfkeywords={Geodesy},
+     pdfkeywords={Geodesy,Physics},
      colorlinks=true,
      urlcolor=iggblue,
      linkcolor=iggblue,
@@ -86,8 +86,9 @@
 \begin{document}
 \maketitle
 
-\section{Introduction}
-Some thoughts and a theoretical framework are gathered here to
+\section{Disclaimer}
+The stuff below still needs to be checked thoroughly and may be error-prone.
+It contains some thoughts and a theoretical framework are gathered here to
 quantify the circumference changes due to surface loading induced
 deformations of the bedrock.
 
@@ -105,65 +106,252 @@ Assumptions:
 \includegraphics[width=\textwidth]{Ringschematically}
 \end{figure}
 The circumference of the LHC ring,  $\Delta L$, may be computed by a path
-integral over the ring which is deformed from a perfect circle by $\vec{h}(x,y)$:
+integral over the ring which is deformed from a perfect circle by the
+deformation vector $\textbf{h}(x,y)$:
 \begin{equation}
-  L =\oint_{deformed ring} ds(x,y) 
+  L =\oint_{deformed ring} ds(x,y)
+  \label{eq:int}
 \end{equation}
-We parameterize the path of deformed ring in terms of angle
-$\alpha$. The infinitesimal path length $ds(x,y)$ , can then be
+
+We parameterize the path in terms of the angle $\alpha$. The infinitesimal path length $ds(x,y)$ , can then be
 linked to $d\alpha$ by:
 \begin{equation}
-r\alpha=\vec{e}_{\alpha}\cdot (\vec{e}_{s} ds)
+  \begin{split}
+  ds(x,y)=|\textbf{x}_{c}(\alpha+d\alpha)+\textbf{h}(\alpha+d\alpha)-\textbf{x}_{c}(\alpha)+\textbf{h}(\alpha)|\\
+  =&|d\textbf{x}_{c}(\alpha)+d\textbf{h}(\alpha)|\end{split}
 \end{equation}
-Where $\vec{e}_{s}$ is the tangential (unit) vector to the deformed ring and
-$\vec{e}_{\alpha}$ is a unit vector in the direction of alpha:
+
+In terms of vector products $ds$ can be written as:
+\begin{equation}\begin{split}
+  d s =&
+  \sqrt{[d\textbf{x}_{c}+d\textbf{h}]\cdot[d\textbf{x}_{c}+d\textbf{h}]}\\
+  =& \sqrt{d\textbf{x}_{c} \cdot d\textbf{x}_{c}  +2
+  d\textbf{x}_{c}\cdot d\textbf{h}+ d\textbf{h} \cdot d\textbf{h}} \end{split}
+  \label{eq:2} \end{equation}
+
+We now approximate the horizontal deformation $\textbf{h}$ as a
+first order taylor series around the coordinate origin,
+$\textbf{x}_{0}$:
 \begin{equation}
-\vec{e}_{\alpha}=\left[\begin{array}{c}\cos \alpha\\-\sin \alpha\end{array}\right]
+  \textbf{h}(\textbf{x}_{c})\approx\textbf{h}\bigg|_{\textbf{x}_{0}} +
+  \textbf{J}(\textbf{h})\bigg|_{\textbf{x}_{0}} [\textbf{x}_{c}-\textbf{x}_{0}]
 \end{equation}
-
-The integral above may thus be rewritten in terms of $\alpha$.
+Where the Jacobian $\textbf{J}$ is composed of:
 \begin{equation}
-  L =\int_{0}^{2\pi} \frac{r}{\vec{e}_{\alpha}\cdot \vec{e}_{s}}d\alpha 
+ \textbf{J}(\textbf{h})=\left[\begin{array}{cc}\frac{\partial
+       h_{x}}{\partial x} & \frac{\partial h_{x}}{\partial y}\\\frac{\partial
+       h_{y}}{\partial x} & \frac{\partial h_{y}}{\partial
+       y}\end{array}\right]=\left[\begin{array}{cc}J_{11}
+     &J_{12}\\J_{21}& J_{22}\end{array}\right]
+\end{equation}
+
+Building the difference vector between the locations associated with
+$\alpha+d\alpha$ and $\alpha$ thus yield:
+\begin{equation}
+  d\textbf{h}(\alpha)=\textbf{J}(\textbf{h})\bigg|_{\textbf{x}_{0}} d\textbf{x}_{c}(\alpha)
+\end{equation}
+
+Substituting this in Eq. \ref{eq:2} yields:
+\begin{equation}
+ds = \sqrt{d\textbf{x}_{c}\cdot d\textbf{x}_{c} +2d\textbf{x}_{c}\cdot
+  (\textbf{J}(\textbf{h})\bigg|_{\textbf{x}_{0}} d\textbf{x}_{c})
+  +(\textbf{J}(\textbf{h})\bigg|_{\textbf{x}_{0}} d\textbf{x}_{c} )\cdot (\textbf{J}(\textbf{h})\bigg|_{\textbf{x}_{0}}) d\textbf{x}_{c})}
+  \end{equation}
+
+Since the expected horizontal deformations (order of mm) vary only
+slightly over several 10's of km, the last term may be safely
+discarded as it is scaled by the squares of these small horizontal gradients
+In terms of $\alpha$, $d\textbf{x}_{c}$ is oriented tangential to the circle
+and can be written as:
+\begin{equation}
+d\textbf{x}_{c}=r_{LHC}\left[\begin{array}{c}\cos\alpha\\-\sin\alpha\end{array}\right]d\alpha
+\end{equation}
+
+Subtituting the above in the integral of Eq. \ref{eq:int} and
+evaluating the vector products yields:
+\begin{equation}
+  L =r_{LHC}\oint_{0}^{2\pi}
+  \sqrt{1+J_{11}\cos^{2}\alpha+J_{22}\sin^{2}\alpha -(J_{12}+J_{21})\sin\alpha\cos\alpha} d\alpha 
+\end{equation}
+
+The above integral has similarities to the complete Elliptic integral
+of the second kind, although an additional mixed term involving $\sin
+\alpha\cos\alpha$ is present, and the bounds run to $2\pi$. In any
+case no analytical solution exists for this integral, so one may
+consider computing this numerically. However another approach would
+be to linearize the state of the deformed ring against the undeformed
+state (i.e. a perfect circle). This is generally justified as the
+deformations are considered small relative to the ring geometry. Note
+that in the the undeformed state, $\textbf{J}(\textbf{h})=\textbf{0}$,
+so we can linearize around the situation where all $J_{ij}=0$.
+The circumference can then be approximated as:
+\begin{equation}
+  L\approx L\bigg|_{circle}+\sum_{i=1}^{2}\sum_{j=1}^{2}\frac{\partial L
+  }{\partial J_{ij}}\bigg|_{circle} J_{ij}=2\pi r_{LHC}+ \Delta L
+  \end{equation}
+
+Using Leibniz integral rule we can bring the differentation against
+$J_{ij}$ within the integral. So one can write for the change of
+circumference, $\Delta L$:
+\begin{equation}
+\Delta L = r_{LHC}\left[J_{11}\int_{0}^{2\pi} \cos^{2} d\alpha +
+J_{22}\int_{0}^{2\pi} \sin^{2} d\alpha -
+(J_{12}+J_{21})r_{LHC}\int_{0}^{2\pi} \cos\alpha\sin\alpha d\alpha\right]
+\end{equation}
+These trigonometric integrals can be evaluated analytically where the
+last terms yields zero over the domain $0\ldots 2\pi$ such that:
+\begin{equation}
+  \Delta L = \frac{\pi r_{LHC}}{2 } (J_{11} + J_{22})=\frac{\pi
+    r_{LHC}}{2 } \left(\frac{\partial h_{x}}{\partial
+    x}+\frac{\partial h_{y}}{\partial y}\right)\bigg|_{\textbf{x}_{0}}
+  \label{eq:dL}
 \end{equation}
 
 
-There are several approximations which we can now apply:
-\begin{itemize}
-  \item linearize the horizontal deformation field around the center
-    of the ring. (Probably OK, since the deformations are expected to
-    be of large scale (10s of kms').
-    \item evaluate  the horizontal deformations at the original ring
-      and not on the deformed ring. This may help in solving the
-      integral  in an analytical way.
-  \end{itemize}
+Circumference changes caused by horizontal Earth deformations are
+thus linearly proportional to the radius of the ring. from a signal to
+noise perspective this means that large rings have clearly an
+advantage when loading signals are to be recovered. To compute
+circumference changes according to Eq. \ref{eq:dL}, we will (only)
+need the compute the  2 gradients $\frac{\partial h_{x}}{\partial x},\frac{\partial h_{y}}{\partial y}$ at the ring's
+center. For surface loading phenomena this will be the topic of the
+next sections.
 
-%%For a circular  ring we may parameterize the ring in terms of a fixed
-%% radius, $r_{lhc}$ and an azimuth angle $\alpha$:
-%% \begin{equation}
-%%   \Delta L =\int_{0}^{2\pi}
-%%   \left[\begin{array}{c}h_{x}(x,y)\\h_{y}(x,y)\end{array}\right]
-%%   \cdot \left[\begin{array}{c}\cos \alpha\\-\sin \alpha\end{array}\right]d\alpha
-%% \label{eq:2}\end{equation}
+\subsection{Hydrology and atmospheric induced LHC circumference
+  changes from GRACE data}
+
+GRACE results are commony provided in terms of spherical harmonic
+Stokes coefficients which describe the Earth's potential field. Most
+variability of the gravity field is caused by mass redistribution
+close to the Earth's surface (i.e. a  thin shell). Using a thin shell
+assumption together with an elastic Earth model, geoid changes,
+horizonta/vertical deformations can be computed from those Stokes
+coefficients.\\
+
+A surface load (in equivalent water height),$T(\theta,\lambda)$, at
+longitude $\lambda$ and colatitude $\theta$,can be be described in
+terms of a spherical harmonic expansion:
+\begin{equation}
+  T(\theta,\lambda)=a\sum_{n=0}^{\infty}\sum_{m=-n}^{n} T_{nm} \bar{Y}(\theta,\lambda)
+\end{equation}
+
+Where $a$ is the mean Earth radius, and the spherical harmonic functions are normalized
+$4\pi$ -'geodesy-style'. Which means that:
+
+\begin{equation}
+\bar{Y}_{nm}=\left\{\begin{array}{c} N_{nm}P_{nm}(\cos \theta)\cos m\lambda,\; m\ge0\\N_{n|m|}P_{n|m|}(\cos \theta)\sin |m|\lambda,\; m<0\end{array}\right.
+\end{equation}
+Where $P_{nm}$ are the associated Legendre functions, without a
+Condon-Shortly Phase applied. The normalization factor is defined as:
+\begin{equation}
+N_{nm}=\sqrt{(2-\delta_{0m})(2n+1)\frac{(n-m)!}{(n+m)!}}
+\end{equation}
+
+In practice, the combined product $N_{n|m|}P_{n|m|}$ may be  directly computed by
+recursion, as $P_{nm}$ will be numerically unstable for higher degrees
+$n$.
+
+In that form the following orrhogonality property holds:
+\begin{equation}
+\oint \bar{Y}_{nm}(\omega)\bar{Y}_{n'm'}(\omega)d\omega=4\pi \delta_{nn'}\delta_{mm'}
+  \end{equation}
 
 
-%% When the  ring is relatively small we may linearize the deformation
-%% around the ring's center $(\lambda_{c},\theta_{c})$:
-%% \begin{equation}
-%% \vec{h}(x,y)=\vec{h}(x_{c},y_{c})+\frac{\partial \vec{h}}{\partial
-%%   x}\vert_{c}(x-x_{c})+ \frac{\partial \vec{h}}{\partial y}\vert_{c}(y-y_{c})+ \mathcal{O}(2) 
-%% \end{equation}
+Horizontal deformation can be comuted from the surface loading
+coefficients $T_{nm}$ by (see e.g. Eq. 4.3 Dissertation Rietbroek 2014):
 
-%% noting that:
-%% \[
-%% \left[\begin{array}{c}x-x_{c}\\y-y_{c}\end{array}\right]=r_{LHC}\left[\begin{array}{c}\sin \alpha\\\cos \alpha\end{array}\right]
-%% \]
-%% We can solve the integral \ref{eq:2} in terms of the gradients of the
-%% horizontal deformation field:
-%% \begin{equation}
-%% \Delta L=
-%% \end{equation}
-\subsection{Hydrology and atmospheric induced LHC circumference changes from GRACE data}
-\subsection{LHC circumference changes due to water level changes}
+\begin{equation}
+\textbf{h}(\theta,\lambda)=\frac{3a\rho_{w}}{\rho_{e}}\sum_{n=1}^{\infty}\sum_{m=-n}^{n}\frac{l'_{n}}{2n+1}\left[\begin{array}{c}
+    \frac{\partial \bar{Y}_{nm}}{\sin \theta \partial
+      d\lambda}\\-\frac{\partial \bar{Y}_{nm}}{\partial \theta}\end{array}\right]T_{nm}
+\end{equation}
+The Spherically symmetric Non-rotating Elastic Isotropic (SNREI) Earth model is contained within the so-called load Love
+numbers, $l'_{n}$,which are only dependent on the degree, and describe
+the horizontal deformation response due to a surface load.
+For the circumference changes we need the derivative of those
+contributions. Noting that:
+\begin{eqnarray}
+\partial x &=& a\sin\theta \partial \lambda\\
+\partial y &=& -a\partial \theta\\
+\end{eqnarray}
+and simplifying the notation by introducing the surface gradient
+operator:
+\begin{equation}
+  \nabla_{\Omega}=\left[\begin{array}{c}\frac{\partial}{\sin\theta
+        \partial \lambda}\\\frac{\partial}{\partial \theta} \end{array}\right]
+  \end{equation}
+
+yields a cicrumference change of:
+
+\begin{equation}
+  \Delta L =\frac{\pi r_{LHC}}{2} \frac{3\rho_{w}}{\rho_{e}}\sum_{n=1}^{\infty}\sum_{m=-n}^{n}\frac{l'_{n}}{2n+1}\left[\nabla_{\Omega} \cdot
+  (\nabla_{\Omega} \bar{Y}_{nm})\right]T_{nm}
+\end{equation}
+
+The terms with the surface gradient operator can furthermore be
+simplified to ease its numerical computation. Realizing that the
+surface spherical harmonics obey the following differenttial equation:
+
+\begin{equation}
+  r^{2}\nabla^{2} \bar{Y}_{nm}= -n(n+1)\bar{Y}_{nm}
+\end{equation}
+which in spherical coordinates is:
+\begin{equation}
+  \frac{\cos\theta}{\sin\theta}\frac{\partial \bar{Y}_{nm}}{\partial
+    \theta}+\frac{\partial^{2}\bar{Y}_{nm}}{\partial\theta^{2}}+\frac{\partial^{2} \bar{Y}_{nm}}{\sin^{2}\theta\partial \lambda^{2}}= -n(n+1)\bar{Y}_{nm}
+\end{equation}
+
+So:
+\begin{equation}
+  \Delta L =\frac{\pi r_{LHC}}{2}
+  \frac{3\rho_{w}}{\rho_{e}}\sum_{n=1}^{\infty}\sum_{m=-n}^{n}\frac{-l'_{n}}{2n+1}\left[
+    \frac{\cos\theta}{\sin\theta}\frac{\partial \bar{Y}_{nm}}{\partial
+      \theta} +n(n+1)\bar{Y}_{nm}\right]T_{nm}
+  \label{eq:jacT}
+\end{equation}
+
+
+
+The spherical harmonic and its derivative can be computed numerically
+for the center position of the ring.
+
+Using thin shell assumptions, the fully normalized Stokes coefficients (relative to a
+static field) provided by
+GRACE, $\delta C_{nm}$, can be linked to the Surface laoding
+coefficients by:
+\begin{equation}
+\delta C_{nm} = \frac{1+k'_{n}}{2n+1}\frac{3\rho_{w}}{\rho_{e}}
+T_{nm},\; n>0
+\end{equation}
+
+The load Love number $k'_{n}$ now describes the change in potential of
+the Earth upon a forcing by a surface load.
+So equation \ref{eq:jacT} can also be written in terms of Stokes
+coefficient (anomalies)
+\begin{equation}
+  \Delta L =\frac{\pi r_{LHC}}{2}
+  \sum_{n=1}^{\infty}\sum_{m=-n}^{n}\frac{-l'_{n}}{1+k'_{n}}\left[
+    \frac{\cos\theta}{\sin\theta}\frac{\partial \bar{Y}_{nm}}{\partial
+    \theta} +n(n+1)\bar{Y}_{nm}\right]\delta C_{nm}
+\label{eq:jacpot}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{LHC circumference changes due to water level changes in Lake Geneva}
 
 
 
