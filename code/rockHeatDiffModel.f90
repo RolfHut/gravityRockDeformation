@@ -4,7 +4,7 @@ IMPLICIT NONE
 
 ! Declaration of variables
 INTEGER :: i, n, nnx, nstep
-REAL (8) :: days, years, SeasonA, pi
+REAL (8) :: days, years, SeasonA, pi, plotDepth
 REAL (8) :: total_time, time, dt, Tbc_left, Tbc_right, kappa, Lx, h
 REAL (8), DIMENSION (:), ALLOCATABLE :: T, x, T_new
 CHARACTER (30) :: filename
@@ -31,6 +31,7 @@ nstep = total_time/dt
 Tbc_left = 10
 Tbc_right = 10
 SeasonA = 15
+plotDepth = 150
 kappa = 1d-6
 
 ALLOCATE (T(1:nnx), x(1:nnx), T_new(1:nnx))
@@ -68,9 +69,7 @@ WRITE (11,*) '# position [m]     ', 'time [days]     ', 'temp [degC]'
     ! Write initial conditions
     time = 0
     DO i = 1, nnx
-        IF (MOD(i,50) == 1) THEN
-            WRITE (11,*) x(i), time/days, T(i)
-        ENDIF
+        WRITE (11,*) x(i), time/days, T(i)
     ENDDO
 
     WRITE (11,*) ''
@@ -85,7 +84,7 @@ WRITE (11,*) '# position [m]     ', 'time [days]     ', 'temp [degC]'
         DO i = 1, nnx
             T_new(1) = SeasonA*sin(2*pi*time/years)+Tbc_left
             T_new(nnx) = Tbc_right
-            IF (MOD(i,50) == 1) THEN
+            IF ((i*h)<plotDepth) THEN
                 WRITE (11,*) x(i), time/days, T_new(i)
             ENDIF
             T(i) = T_new(i)
@@ -113,6 +112,3 @@ END PROGRAM CERN
 ! x = position along beam of length Lx [m]
 ! T_new = new temperature at location i
 ! T_old = temperature at location i in previous timestep
-
-
-
