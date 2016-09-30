@@ -28,6 +28,7 @@ fclose(fID);
 cernTimeStamp=datenum([dataCern1{2};dataCern2{2}],'dd-mm-yy_HH:MM:SS');
 cernCircumData=[dataCern1{3};dataCern2{3}];
 
+% I added additional comments to this code
 
 %gravity data from 
 fID = fopen(graceData);
