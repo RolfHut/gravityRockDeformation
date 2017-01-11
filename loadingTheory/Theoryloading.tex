@@ -353,6 +353,53 @@ TODONOTE: Consistent treatment of reference systems (i.e. degree 1 contributions
 
 \subsection{LHC circumference changes due to water level changes in Lake Geneva}
 
+\appendix
+\section{Deformation relative to a deforming surface point}
+The deformation in an 'isomorphic' reference frame induced by a surface load on an elastic earth can be described in the local East, North, Up axis system as:
+\begin{equation}
+\textbf{d}(\theta,\lambda)=\frac{3a\rho_{w}}{\rho_{e}}\sum_{n=1}^{\infty}\sum_{m=-n}^{n}\frac{1}{2n+1}\left[\begin{array}{c}
+    l'_{n}\frac{\partial \bar{Y}_{nm}}{\sin \theta \partial
+      d\lambda}\\-l'_{n}\frac{\partial \bar{Y}_{nm}}{\partial \theta}\\h'_{n}\bar{Y}_{nm}\end{array}\right]T_{nm}
+\end{equation}
+
+The choice of the degree 1 load Love numbers (i.e. $h'_{1},l'_{1}$) determines which isomorphic reference is used to describe the deformation.
+
+Now if we want to shift the reference frame origin, to follow that of a surface point $\lambda_{0},\theta_{0}$, we need to express this offset first in terms of cartesian coordinates apply the shift and then rotate it back in the local ENU system. On a spherical Earth the rotation matrix is described as follows:
+\begin{equation}
+\textbf{R}_{xyz\rightarrow ENU}(\theta,\lambda)=\left[\begin{array}{ccc}-\sin\lambda&\cos\lambda&0\\-\cos\lambda\cos\theta&-\sin\lambda\cos\theta&\sin\theta\\\cos\lambda\sin\theta&\sin\lambda\sin\theta&\cos\theta\end{array}\right]
+\end{equation}
+
+Furthermore, one should note that the above rotation matrix can also be written in terms of degree 1 spherical harmonics and its derivatives:
+
+\begin{equation}
+\textbf{R}_{xyz\rightarrow ENU}(\theta,\lambda)=\frac{1}{\sqrt{3}}\left[\begin{array}{ccc}\frac{\partial \bar{Y}_{11}}{\sin \theta \partial
+      d\lambda}&\frac{\partial \bar{Y}_{1-1}}{\sin \theta \partial d\lambda}&0\\
+      -\frac{\partial \bar{Y}_{11}}{\partial \theta}&-\frac{\partial \bar{Y}_{1-1}}{\partial \theta}&-\frac{\partial \bar{Y}_{10}}{\partial \theta}\\
+      \bar{Y}_{11}&\bar{Y}_{1-1}&\bar{Y}_{10}\\
+      \end{array}\right]
+\end{equation}
+
+We can shift the deformation $\textbf{d}$ to a frame which moves with the deformation at the reference surface point, $\textbf{d}_{0}=\textbf{d}(\lambda_{0},\theta_{0})$
+\begin{equation}
+\tilde{\textbf{d}}=\textbf{d}-\textbf{R}(\theta,\lambda)\textbf{R}^{T}(\theta_{0},\lambda_{0})\textbf{d}_{0}
+\end{equation}
+
+It can be shown that this expression for this relative deformation is independent of the chosen (isomorphic) reference frame (and thus the associated reference frame origin of the degree 1 Love numbers are irrelavant). To see this note that the degree 1 contributions to the relative  deformation above can be written in terms of the rotation matrix int he cartesian frame:
+\begin{equation}
+\tilde{\textbf{d}}(\theta,\lambda,n=1)=\frac{\sqrt{3}a\rho_{w}}{\rho_{e}}\left[\boldsymbol{\Lambda}\textbf{R}(\theta,\lambda)-\textbf{R}(\theta,\lambda)\textbf{R}^{T}(\theta_{0},\lambda_{0})\boldsymbol{\Lambda}\textbf{R}(\theta_{0},\lambda_{0})\right]\left[\begin{array}{c}T_{11}\\T_{1-1}\\T_{10}\\\end{array}\right]
+\end{equation}
+
+where the load Love numbers are contained within the diagonal matrix:
+\begin{equation}
+\boldsymbol{\Lambda}=\left[\begin{array}{ccc}l_{1}'&0&0\\0&l_{1}'&0\\0&0&h_{1}'\\\end{array}\right]
+\end{equation}
+
+A shifted reference frame would be accomplished by adding a unit diagonal matrix scaled by an isomorphic frame parameter $\alpha$:
+\begin{equation}
+\boldsymbol{\Lambda}^{*}=\boldsymbol{\Lambda}+\alpha\boldsymbol{I}
+\end{equation}
+
+The frame independence can be tested by substituting $\boldsymbol{\Lambda}^{*}$ which will result in the same expression as using $\boldsymbol{\Lambda}$, when the orthogonality of the rotation matrices is exploited.
 
 
 % make Bibliography
